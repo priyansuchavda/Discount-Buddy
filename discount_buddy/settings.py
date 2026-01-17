@@ -203,19 +203,16 @@ SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False" if DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-# Swagger/OpenAPI settings
+# Swagger/OpenAPI settings for drf_yasg
 SWAGGER_SETTINGS = {
+    "USE_SESSION_AUTH": False,
     "SECURITY_DEFINITIONS": {
         "Bearer": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT",
+            "type": "apiKey",
             "name": "Authorization",
-            "description": "Bearer token authentication. Format: 'Bearer <token>'",
             "in": "header",
         }
     },
-    "USE_SESSION_AUTH": False,
 }
 
 

@@ -380,7 +380,8 @@ class MerchantRestaurantViewSet(viewsets.ModelViewSet):
         # Get merchant's restaurants
         try:
             merchant = self.request.user.merchant
-        except:
+        except (AttributeError, Exception) as e:
+            # RelatedObjectDoesNotExist or any other exception
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("Merchant profile not found. Please create a merchant account.")
         return Restaurant.objects.filter(
@@ -402,7 +403,8 @@ class MerchantRestaurantViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         try:
             merchant = self.request.user.merchant
-        except:
+        except (AttributeError, Exception) as e:
+            # RelatedObjectDoesNotExist or any other exception
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("Merchant profile not found. Please create a merchant account.")
         serializer.save(merchant=merchant)
@@ -422,7 +424,8 @@ class MerchantDealViewSet(viewsets.ModelViewSet):
         # Get deals for merchant's restaurants
         try:
             merchant = self.request.user.merchant
-        except:
+        except (AttributeError, Exception) as e:
+            # RelatedObjectDoesNotExist or any other exception
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("Merchant profile not found. Please create a merchant account.")
         return Deal.objects.filter(
@@ -433,7 +436,8 @@ class MerchantDealViewSet(viewsets.ModelViewSet):
         restaurant_id = self.request.data.get("restaurant")
         try:
             merchant = self.request.user.merchant
-        except:
+        except (AttributeError, Exception) as e:
+            # RelatedObjectDoesNotExist or any other exception
             from rest_framework.exceptions import PermissionDenied
             raise PermissionDenied("Merchant profile not found. Please create a merchant account.")
         

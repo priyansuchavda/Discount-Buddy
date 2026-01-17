@@ -42,7 +42,12 @@ class MerchantVoucherView(generics.ListCreateAPIView):
         )
 
     def perform_create(self, serializer):
-        merchant = self.request.user.merchant
+        try:
+            merchant = self.request.user.merchant
+        except (AttributeError, Exception):
+            # RelatedObjectDoesNotExist or any other exception
+            from rest_framework.exceptions import PermissionDenied
+            raise PermissionDenied("Merchant profile not found. Please create a merchant account.")
         serializer.save(merchant=merchant)
 
 
